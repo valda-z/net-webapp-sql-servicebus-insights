@@ -1,6 +1,13 @@
 ﻿@model ToDoWebApp.Models.ToDo
 @{
     ViewBag.Title = "Home Page";
+
+    var lst = new List<SelectListItem>();
+    lst.Add(new SelectListItem { Text = "CRITICAL", Value = "CRITICAL" });
+    lst.Add(new SelectListItem { Text = "STANDARD", Value = "STANDARD" });
+    lst.Add(new SelectListItem { Text = "EASY", Value = "EASY" });
+
+    var comments = new ToDoWebApp.Models.DocDBContext().GetComments(Model.GId);
 }
 
 <div class="jumbotron">
@@ -9,50 +16,83 @@
     
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h2>ToDo</h2>
-        <p>
-            @using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,
-            new
+@using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,
+                                    new
+                                    {
+                                        @class = "form-horizontal",
+                                        @novalidate = "novalidate",
+                                        @id = "validation-form"
+                                    }))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.GId)
+    <div class="row">
+        <div class="col-md-6">
+            <h2>ToDo</h2>
+            <p>
+                    <fieldset>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.GId, "GID", new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.GId, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Note, "Note", new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(m => m.Note, new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Category, "Category", new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(m => m.Category, lst, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Created, "Created", new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Created, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="btn-toolbar">
+                        <button type="submit" name="Save" value="Save" class="btn btn btn-primary">Save changes</button>
+                    </div>
+            </p>
+        </div>
+        <div class="col-md-6">
+            @if (Model.Id > 0)
             {
-                @class = "form-horizontal",
-                @novalidate = "novalidate",
-                @id = "validation-form"
-            }))
-            {
-                @Html.HiddenFor(m => m.Id)
+                <h2>ToDo comments</h2>
+                <table class="table table-hover table-bordered">
+                    @if (comments == null || comments.Count == 0)
+                    {
+                        <tr>
+                            <td>There are no comments ...</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var itm in comments)
+                        {
+                            <tr>
+                                <td>@itm.Comment (@itm.Created)</td>
+                            </tr>
+                        }
+                    }
+                </table>
                 <fieldset>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.GId, "GID", new { @class = "col-sm-3 control-label" })
-                        <div class="col-sm-9">
-                            @Html.TextBoxFor(m => m.GId, new { @class = "form-control", @readonly = "readonly" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Note, "Note", new { @class = "col-sm-3 control-label" })
-                        <div class="col-sm-9">
-                            @Html.TextAreaFor(m => m.Note, new { @class = "form-control", @required = "required" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Created, "Created", new { @class = "col-sm-3 control-label" })
-                        <div class="col-sm-9">
-                            @Html.TextBoxFor(m => m.Created, new { @class = "form-control", @readonly = "readonly" })
+                        <div class="col-sm-12">
+                            @Html.TextArea("CommentText", new { @class = "form-control" })
                         </div>
                     </div>
                 </fieldset>
                 <div class="btn-toolbar">
-                    <button type="submit" name="Save" value="Save" class="btn btn btn-primary">Save changes</button>
+                    <button type="submit" name="Comment" value="Comment" class="btn btn btn-primary">Comment</button>
                 </div>
             }
-        </p>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h2>ToDo comments</h2>
-        <p>ToDo application demonstrating Azure technologies like Azure SQL Database, DocumentDB, Service Bus, Function App and Application Insights running on Azure Web App.</p>
-        <p>@Html.ActionLink("Create ToDo", "Detail",
-          new { controller = "Home", id = 0 },
-          new { @class = "btn btn-primary" })</p>
-    </div>
-</div>
+}

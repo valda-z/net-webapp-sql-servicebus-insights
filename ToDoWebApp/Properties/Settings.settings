@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ToDoWebApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DOCDB_URL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://localhost:8081</Value>
+    </Setting>
+    <Setting Name="DOCDB_KEY" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

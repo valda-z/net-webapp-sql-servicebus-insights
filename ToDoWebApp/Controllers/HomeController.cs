@@ -37,21 +37,39 @@ namespace ToDoWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Detail(int id, ToDo model)
+        public ActionResult Detail(int id, ToDo model, FormCollection formcol)
         {
-            var cx = new ToDoDBContext();
-            if (id == 0)
+            if (formcol["Save"] == "Save")
             {
-                model.GId = Guid.NewGuid();
-                model.Created = DateTime.Now;
-                cx.ToDoes.Add(model);
+                var cx = new ToDoDBContext();
+                if (id == 0)
+                {
+                    model.GId = Guid.NewGuid();
+                    model.Created = DateTime.Now;
+                    cx.ToDoes.Add(model);
+                }
+                else
+                {
+                    var p = cx.ToDoes.Single(e => e.Id == id);
+                    p.Note = model.Note;
+                    p.Category = model.Category;
+                }
+                cx.SaveChanges();
             }
-            else
+            else if (formcol["Comment"] == "Comment")
             {
-                var p = cx.ToDoes.Single(e => e.Id == id);
-                p.Note = model.Note;
+                if (formcol["CommentText"].Length > 0)
+                {
+                    var td = new ToDoComment();
+                    td.Id = Guid.NewGuid();
+                    td.ToDoGId = model.GId;
+                    td.Created = DateTime.Now;
+                    td.Comment = formcol["CommentText"];
+                    new DocDBContext().InsertComment(td);
+                    return RedirectToAction("Detail", new { id = id });
+                }
             }
-            cx.SaveChanges();
+
 
             return RedirectToAction("Index");
         }

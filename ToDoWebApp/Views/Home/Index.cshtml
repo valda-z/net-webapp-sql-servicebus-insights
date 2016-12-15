@@ -16,6 +16,7 @@
             <table class="table table-hover table-bordered">
                 <thead>
                     <td>GId</td>
+                    <td>Category</td>
                     <td>Note</td>
                     <td>Created</td>
                 </thead>
@@ -23,7 +24,8 @@
                 @foreach(var x in Model)
                 {
                     <tr>
-                        <td>@x.GId</td>
+                        <td>@Html.ActionLink(x.GId.ToString(), "Detail", new { controller = "Home", id = x.Id })</td>
+                        <td>@x.Category</td>
                         <td>@x.Note</td>
                         <td>@x.Created</td>
                     </tr>

@@ -16,6 +16,9 @@ namespace ToDoWebApp.Models
 
         public Guid GId { get; set; }
 
+        [StringLength(50)]
+        public string Category { get; set; }
+
         [StringLength(500)]
         public string Note { get; set; }
 
