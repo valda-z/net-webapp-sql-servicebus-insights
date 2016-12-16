@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using ToDoWebApp.Models;
@@ -16,7 +17,7 @@ namespace ToDoWebApp.Controllers
             try
             {
                 TopicClient Client = TopicClient.CreateFromConnectionString(
-                    Settings.Default.SERVICEBUS_URI
+                    ConfigurationManager.AppSettings["SERVICEBUS_URI"]
                     , "todotopic");
                 var msg = new BrokeredMessage(
                      JsonConvert.SerializeObject(itm, Formatting.Indented));

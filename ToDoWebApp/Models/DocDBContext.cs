@@ -2,6 +2,7 @@
 using Microsoft.Azure.Documents.Client;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -15,8 +16,8 @@ namespace ToDoWebApp.Models
         private static string databaseName = "ToDoDB";
         private static string databaseCollectionName = "ToDoComments";
 
-        private static readonly string EndpointUri = Settings.Default.DOCDB_URL;
-        private static readonly string PrimaryKey = Settings.Default.DOCDB_KEY;
+        private static readonly string EndpointUri = ConfigurationManager.AppSettings["DOCDB_URL"];
+        private static readonly string PrimaryKey = ConfigurationManager.AppSettings["DOCDB_KEY"];
 
         private DocumentClient client;
 

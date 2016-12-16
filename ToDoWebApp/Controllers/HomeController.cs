@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -30,7 +31,7 @@ namespace ToDoWebApp.Controllers
                 {
                     ip = "46.228.25.202";
                 }
-                var client = new RestClient(string.Format("http://{0}:5000", Properties.Settings.Default.GEOIPSERVER));
+                var client = new RestClient(string.Format("http://{0}:5000", ConfigurationManager.AppSettings["GEOIPSERVER"]));
                 var request = new RestRequest("/api/ip?addr=" + ip, Method.GET);
                 var queryResult = client.Execute<GeoIPHelper.RootObject>(request).Data;
                 if (queryResult == null)
