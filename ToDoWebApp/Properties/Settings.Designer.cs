@@ -41,5 +41,14 @@ namespace ToDoWebApp.Properties {
                 return ((string)(this["DOCDB_KEY"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.19.142.204")]
+        public string GEOIPSERVER {
+            get {
+                return ((string)(this["GEOIPSERVER"]));
+            }
+        }
     }
 }
