@@ -103,6 +103,10 @@ namespace ToDoWebApp.Controllers
                     p.Note = model.Note;
                     p.Category = model.Category;
                 }
+
+                //Send to sservice bus
+                ServiceBusHelper.SendToAll(model);
+
                 cx.SaveChanges();
             }
             else if (formcol["Comment"] == "Comment")
