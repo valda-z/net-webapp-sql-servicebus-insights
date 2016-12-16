@@ -11,5 +11,8 @@
     <Setting Name="GEOIPSERVER" Type="System.String" Scope="Application">
       <Value Profile="(Default)">172.19.142.204</Value>
     </Setting>
+    <Setting Name="SERVICEBUS_URI" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

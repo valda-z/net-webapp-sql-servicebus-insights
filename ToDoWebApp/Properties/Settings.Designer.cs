@@ -50,5 +50,14 @@ namespace ToDoWebApp.Properties {
                 return ((string)(this["GEOIPSERVER"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SERVICEBUS_URI {
+            get {
+                return ((string)(this["SERVICEBUS_URI"]));
+            }
+        }
     }
 }
