@@ -43,9 +43,9 @@ namespace ToDoWebApp.Models
             return query.ToList();
         }
 
-        public void InsertComment(ToDoComment itm)
+        public async Task InsertComment(ToDoComment itm)
         {
-            client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, databaseCollectionName), itm);
+            await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, databaseCollectionName), itm);
         }
 
         public async Task InitDB()

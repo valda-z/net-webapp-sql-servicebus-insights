@@ -87,7 +87,7 @@ namespace ToDoWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Detail(int id, ToDo model, FormCollection formcol)
+        public async System.Threading.Tasks.Task<ActionResult> Detail(int id, ToDo model, FormCollection formcol)
         {
             if (formcol["Save"] == "Save")
             {
@@ -119,7 +119,8 @@ namespace ToDoWebApp.Controllers
                     td.ToDoGId = model.GId;
                     td.Created = DateTime.Now;
                     td.Comment = formcol["CommentText"];
-                    new DocDBContext().InsertComment(td);
+                    var doc = new DocDBContext();
+                    await doc.InsertComment(td);
                     return RedirectToAction("Detail", new { id = id });
                 }
             }
