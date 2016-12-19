@@ -97,18 +97,20 @@ namespace ToDoWebApp.Controllers
                     model.GId = Guid.NewGuid();
                     model.Created = DateTime.Now;
                     cx.ToDoes.Add(model);
+                    cx.SaveChanges();
+
+                    //Send to sservice bus
+                    ServiceBusHelper.SendToAll(model);
+
                 }
                 else
                 {
                     var p = cx.ToDoes.Single(e => e.Id == id);
                     p.Note = model.Note;
                     p.Category = model.Category;
+                    cx.SaveChanges();
                 }
 
-                //Send to sservice bus
-                ServiceBusHelper.SendToAll(model);
-
-                cx.SaveChanges();
             }
             else if (formcol["Comment"] == "Comment")
             {
